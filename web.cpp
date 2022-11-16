@@ -135,7 +135,6 @@ void setupWeb() {
 
   server.on("/action", HTTP_GET, [](AsyncWebServerRequest* request) {
     if (auth_user && auth_pwd && auth_user[0] && auth_pwd[0] && !request->authenticate(auth_user, auth_pwd)) {
-      Serial.print("Failed auth as user: "); Serial.print(auth_user); Serial.print(':'); Serial.print(auth_pwd); Serial.println('!');
       return request-> requestAuthentication();
     }
     if(request->hasParam("name")) {
@@ -279,9 +278,9 @@ void setupWeb() {
     }
   });
 
-  server.serveStatic("ui", LittleFS, "/ui.json");
+  server.serveStatic("ui", LittleFS, "/ui.json").setAuthentication(auth_user,auth_pwd);
 
-  server.serveStatic("/", LittleFS, "/web/").setDefaultFile("index.html");
+  server.serveStatic("/", LittleFS, "/web/").setDefaultFile("index.html").setAuthentication(auth_user,auth_pwd);
 
   server.onNotFound([](AsyncWebServerRequest *request){
     request->send(404,"text/plain","Not found");
@@ -290,6 +289,8 @@ void setupWeb() {
   events.onConnect([](AsyncEventSourceClient *client){
     sendInitial(client);
   });
+
+  events.setAuthentication(auth_user,auth_pwd);
 
   server.addHandler(&events);
 
