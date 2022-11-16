@@ -1,0 +1,10 @@
+{
+  "background_color":"#fff",
+  "display":"standalone",
+  "start_url":"/",
+  "name":"IoT Clock",
+  "short_name":"IoT Clock",
+  "icons":[
+    {"src":"/icon.svg","sizes":"192x192","type":"image/svg"}
+    ]
+}
