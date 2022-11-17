@@ -8,7 +8,8 @@ project:
     - xmpp:rvb@rvb.name
 pages:
   - id: main
-    title: Главная
+    title: "Главная"
+    icon: "&#61461;"
     elements:
       - type: table
         label: Имя устройства
@@ -45,6 +46,7 @@ pages:
         label: Свободная память
   - id: clock
     title: Часы
+    icon: "&#61463;"
     elements:
       - type: text
         value: Внешний вид
@@ -108,6 +110,7 @@ pages:
         step: 1
   - id: alarm
     title: Будильник
+    icon: "&#61683;"
     elements:
       - type: text
         value: Будильник
@@ -182,6 +185,7 @@ pages:
         max: 2000
   - id: hw
     title: Оборудование
+    icon: "&#63449;"
     elements:
       - type: text
         value: Часы реального времени
@@ -406,6 +410,7 @@ pages:
         max: 8
   - id: weather
     title: Погода
+    icon: "&#61673;"
     elements:
       - id: weather_url
         label: URL погодного сервиса
@@ -419,6 +424,7 @@ pages:
         min: 5
   - id: wifi
     title: WiFi
+    icon: "&#61931;"
     elements:
       - type: text
         value: Клиент сети
@@ -447,6 +453,7 @@ pages:
         label: Применить настройки WiFi
   - id: system
     title: Система
+    icon: "&#61573;"
     elements:
       - type: text
         value: Авторизация

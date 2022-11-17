@@ -1,3 +1,5 @@
+/* pure-min  */
+
 .pure-button:focus,
 a:active,
 a:hover {
@@ -460,7 +462,7 @@ legend {
 .pure-button-selected,
 a.pure-button-primary,
 a.pure-button-selected {
- background-color:#0078e7;
+ background-color :#0078e7;
  color:#fff
 }
 .pure-button-group .pure-button {
@@ -974,14 +976,19 @@ a.pure-button-selected {
 :root {
  --slide:250px
 }
+
+/* custom styles */
+
 body {
  color:#aaa;
- background:#292929
+ background:#242424;
 }
+
 .pure-img-responsive {
  max-width:100%;
  height:auto
 }
+
 #layout,
 #menu,
 .menu-link {
@@ -1016,11 +1023,11 @@ body {
  text-align:center
 }
 .header h1 {
- color:#2497e3;
+ color:dodgerblue;
  margin:.4em 0;
- font-size:2em;
- font-weight:300;
- font-family:fantasy
+ font-size:2.4em;
+ font-weight: bold;
+ font-variant-caps: small-caps
 }
 .header h2 {
  font-weight:300;
@@ -1041,7 +1048,7 @@ body {
  left:0;
  bottom:0;
  z-index:1000;
- background:#191818;
+ background:#181818;
  overflow-y:auto;
  -webkit-overflow-scrolling:touch
 }
@@ -1066,7 +1073,7 @@ body {
 }
 #menu .pure-menu-selected,
 #menu .pure-menu-heading {
- background:#1f8dd6
+ background:dodgerblue
 }
 #menu .pure-menu-selected a {
  color:#fff
@@ -1103,7 +1110,7 @@ body {
 .menu-link span,
 .menu-link span:before,
 .menu-link span:after {
- background-color:#2497e3;
+ background-color:dodgerblue;
  width:100%;
  height:.2em
 }
@@ -1159,7 +1166,7 @@ input[type=range]::-webkit-slider-runnable-track {
  cursor:pointer;
  animate:0.2s;
  box-shadow:0 0 0px #000000;
- background:#2497E3;
+ background:dodgerblue;
  border-radius:3px;
  border:0 solid #000000
 }
@@ -1175,7 +1182,7 @@ input[type=range]::-webkit-slider-thumb {
  margin-top:-8.5px
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
- background:#2497E3
+ background:dodgerblue
 }
 input[type=range]::-moz-range-track {
  width:100%;
@@ -1183,17 +1190,17 @@ input[type=range]::-moz-range-track {
  cursor:pointer;
  animate:0.2s;
  box-shadow:0 0 0px #000000;
- background:#2497E3;
+ background:dodgerblue;
  border-radius:3px;
  border:0 solid #000000
 }
 input[type=range]::-moz-range-thumb {
  box-shadow:0 0 0px #000000;
- border:1px solid #2497E3;
+ border:1px solid dodgerblue;
  height:20px;
  width:20px;
  border-radius:30px;
- background:#A1D0FF;
+ background:lightskyblue;
  cursor:pointer
 }
 input[type=range]::-ms-track {
@@ -1206,13 +1213,13 @@ input[type=range]::-ms-track {
  color:transparent
 }
 input[type=range]::-ms-fill-lower {
- background:#2497E3;
+ background:dodgerblue;
  border:0 solid #000000;
  border-radius:6px;
  box-shadow:0 0 0px #000000
 }
 input[type=range]::-ms-fill-upper {
- background:#2497E3;
+ background:dodgerblue;
  border:0 solid #000000;
  border-radius:6px;
  box-shadow:0 0 0px #000000
@@ -1220,22 +1227,25 @@ input[type=range]::-ms-fill-upper {
 input[type=range]::-ms-thumb {
  margin-top:1px;
  box-shadow:0 0 0px #000000;
- border:1px solid #2497E3;
+ border:1px solid dodgerblue;
  height:20px;
  width:20px;
  border-radius:40px;
- background:#A1D0FF;
+ background:lightskyblue;
  cursor:pointer
 }
 input[type=range]:focus::-ms-fill-lower {
- background:#2497E3
+ background:dodgerblue
 }
 input[type=range]:focus::-ms-fill-upper {
- background:#2497E3
+ background:dodgerblue
 }
 .hide {
  display:none
 }
+
+/* footer */
+
 footer {
  text-align:center;
  position: absolute;
@@ -1246,9 +1256,15 @@ footer a {
  display: inline-block;
  text-decoration: none
 }
+
+/* notification button/message */
+
 .notification {
   float: right;
  }
+
+/* modal dialog */ 
+ 
 .modal {
   position: fixed; /* Stay in place */
   z-index: 2000; /* Sit on top */
@@ -1266,9 +1282,9 @@ footer a {
   text-transform:uppercase;
   color:#aaa;
   font-size:90%;
-  border:2px solid #2497e3;
+  border:2px solid dodgerblue;
   border-radius:6px;
-  box-shadow:inset 0 1px 11px 0 #1f8dd6
+  box-shadow:inset 0 1px 11px 0 steelblue
   padding: 1rem;
   width: max-content;
   min-width: 30%;
@@ -1282,6 +1298,9 @@ footer a {
   text-align: center;
   border-bottom: lightgray solid 1px;
 }
+
+/* overlapping hint button */
+
 .hint {
   cursor: pointer;
   width: 1rem;
@@ -1291,10 +1310,13 @@ footer a {
   border: none;
   box-shadow: none;
   display: inline-block;
-  vertical-align: super;
+  vertical-align: text-bottom;
   margin-left: -2rem;
   z-index:1;
 }
+
+/* checkbox as a switch */
+
 input[type=checkbox].switch {
     display: none;
 }
@@ -1314,14 +1336,14 @@ label.switch.socket span.switch.slider:before {
     border-radius: 5em;
     position: absolute;
     left: 0;
-    border:2px solid #2497e3;
-    box-shadow:inset 0 1px 11px 0 #1f8dd6
+    border:2px solid dodgerblue;
+    box-shadow:inset 0 1px 11px 0 steelblue
 }
 label.switch span.switch.slider:after {
     content: "";
     width: 1.5rem;
     height: 1.5rem;
-    background: #2497e3;
+    background: dodgerblue;
     border-radius: 5.5ex;
     position: absolute;
     left: 0.4rem;
@@ -1330,7 +1352,7 @@ label.switch span.switch.slider:after {
 }
 label.switch.socket input[type=checkbox]:checked + span.slider:before {
     color: White;
-    background: #0a3660;
+    background: darkslategray;
     content: "";
     background: D;
 }
@@ -1338,23 +1360,48 @@ label.switch.socket input[type=checkbox]:checked + span.slider:after {
     background: white;
     left: 2.4em;
 }
+
+/* weekdays */
+
 .week {
     width: 100%;
 }
 .weekday, .weekday-selected {
-    font-size: min(4vw, 1.5rem);
+    font-size: min(4vw, 100%rem);
     text-align: center;
     margin: 0.5vw;
     padding: 0.4em;
     border-radius: 5em;
-    border:2px solid #2497e3;
-    box-shadow:inset 0 1px 11px 0 #1f8dd6;
+    border:2px solid dodgerblue;
+    box-shadow:inset 0 1px 11px 0 steelblue;
     color: gray
 }
 .weekday-selected {
-    background: #0a3660;
+    background: darkslategray;
     color: white
 }
+
+input[type=number] {
+  appearance: textfield;
+}
+
+/* fill all screen */
+
 #layout { 
   min-height: 100vh; 
+}
+
+/* fonts */
+
+@font-face {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/icons.woff2") format("woff2");
+}
+.hint, .icon {
+  font-family: icons;
+}
+.icon {
+  margin-right: 0.5em;
 }

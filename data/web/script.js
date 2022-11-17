@@ -236,7 +236,7 @@ function ElementHTML(element) {
       return '<div class="pure-u-1 pure-u-md-1-3"><label for="_ui_element_' + element.id + '">' + encode(element.label) + '</label>'
         + '<input data-ui_class="password" type="password" id="_ui_element_' + element.id + '" value="' + encode(value) 
         + '" class="pure-u-1" style="display:inline-block" maxlength="99" oninput="sendUpdate(\'' + element.id + '\')" />'
-        + '<div class="hint" onclick="ShowPwd(\'' + element.id + '\')">&#x1F441;</div></div>'
+        + '<div class="hint" onclick="ShowPwd(\'' + element.id + '\')">&#61550;</div></div>'
     case 'input':
       var pattern = ""
       if (element.pattern) {
@@ -253,7 +253,7 @@ function ElementHTML(element) {
       return '<div class="pure-u-1 pure-u-md-1-3"><label for="_ui_element_' + element.id + '">' + encode(element.label) + '</label>'
         + '<input data-ui_class="input" type="text" id="_ui_element_' + element.id + '" value="' + encode(value) +'"'+ pattern
         + ' class="pure-u-1" style="display:inline-block" maxlength="99" oninput="sendUpdate(\'' + element.id + '\')" />' 
-        + '<div class="hint" onclick="OpenSelect(\'' + element.id+ '\'); getWiFi(\'' + element.id + '\')">&#128246;</div>'
+        + '<div class="hint" onclick="OpenSelect(\'' + element.id+ '\'); getWiFi(\'' + element.id + '\')">&#61931;</div>'
         + '<div class="modal" id="_ui_elemmodal_' + element.id + '" hidden>' 
         + '<div class="modal-content">'
         + '<div id="_ui_elemselect_' + element.id + '"></div>'
@@ -336,6 +336,7 @@ function DrawNavigator(project, pages) {
   for (const page of pages) {
     list = list + '<li id="_ui_pglink_' + page.id 
       + '" class="pure-menu-item"><a class="pure-menu-link" onclick="DrawPage(\''+ page.id +'\')" href="#' + page.id + '">'
+      + (page.icon?'<span class="icon">'+page.icon+'</span>':'')
       + page.title+'</a></li>'
   }
   menu.innerHTML = list
@@ -344,20 +345,23 @@ function DrawNavigator(project, pages) {
 function DrawContacts(contacts) {
   if (!contacts) return;
   var contact_list = '<hr><h4 class="pure-u1">Контакты</h4>'
-  for (const contact of contacts) {
+  for (contact of contacts) {
     const url = new URL(contact)
     var ref
-    console.log(url)
     switch (url.protocol) {
       case 'http':
       case 'https:':
-        ref = '&#8962; '+url.hostname
+        ref = '<span class="icon">&#61461;</span>'+url.hostname
         break
       case 'mailto:':
-        ref = '&#9993; '+url.pathname
+        ref = '<span class="icon">&#61664;</span>'+url.pathname
+        break
+      case 'tg:':
+        ref = '<span class="icon">&#62150;</span>'+url.pathname
+        contact = 'tg://resolve?domain='+url.pathname
         break
       default:
-        ref = '&#128389; '+url.pathname
+        ref = '<span class="icon">&#62074;</span>'+url.pathname
     }
     contact_list += '<a href="'+contact+'">'+ref+'</a>'
   }
