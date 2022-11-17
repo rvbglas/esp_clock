@@ -1,61 +1,26 @@
-(function (window, document) {
-
-    // we fetch the elements each time because docusaurus removes the previous
-    // element references on page navigation
-    function getElements() {
-        return {
-            layout: document.getElementById('layout'),
-            menu: document.getElementById('menu'),
-            menuLink: document.getElementById('menuLink')
-        };
-    }
-
-    function toggleClass(element, className) {
-        var classes = element.className.split(/\s+/);
-        var length = classes.length;
-        var i = 0;
-
-        for (; i < length; i++) {
-            if (classes[i] === className) {
-                classes.splice(i, 1);
-                break;
-            }
-        }
-        // The className is not found
-        if (length === classes.length) {
-            classes.push(className);
-        }
-
-        element.className = classes.join(' ');
-    }
-
-    function toggleAll() {
-        var active = 'active';
-        var elements = getElements();
-
-        toggleClass(elements.layout, active);
-        toggleClass(elements.menu, active);
-        toggleClass(elements.menuLink, active);
-    }
-    
-    function handleEvent(e) {
-        var elements = getElements();
-        
-        if (e.target.id === elements.menuLink.id) {
-            toggleAll();
-            e.preventDefault();
-        } else if (elements.menu.className.indexOf('active') !== -1) {
-            toggleAll();
-        }
-    }
-    
-    document.addEventListener('click', handleEvent);
-
-}(this, this.document));
-
 var pages
 var parameters = {}
 var daynames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'] 
+
+function toggleMenu(e) {
+  active = (document.getElementById('menuLink').className.indexOf('active') !== -1)
+  if (active || e.target.id == 'menuLink' || e.target.id == 'menuBtn') {
+    elements = [ document.getElementById('layout'), document.getElementById('menu'), document.getElementById('menuLink') ]
+    for (const element of elements) {
+      if (!active) {
+        element.classList.add('active')
+      } else {
+        element.classList.remove('active')
+      }
+    }
+    if (e.target.id == 'menuLink' || e.target.id == 'menuBtn') {
+      e.preventDefault()
+    }
+    e.stopPropagation()
+  }
+}
+
+document.getElementById('layout').addEventListener('click', toggleMenu)
 
 function encode(r){
   r = String(r)
@@ -315,7 +280,7 @@ function ElementHTML(element) {
       return options
     case 'week':
       days = '<div class="pure-u-1 pure-u-md-1-3"><label for="_ui_element_' + element.id + '">' + encode(element.label) + '</label>' 
-        + '<table data-ui_class="week" data-value="' + value + '" id="_ui_element_' + element.id + '" cellpadding="5" border="0" align="left"><tbody><tr>'
+        + '<table data-ui_class="week" data-value="' + value + '" id="_ui_element_' + element.id + '" cellpadding="5" border="0" class="week"><tbody><tr>'
       for (i=0; i<7; i++) {
         a_enabled = (value[i] == "1")
         days = days + '<td><div class="weekday' + (a_enabled?"-selected":"") + '" id="_ui_elpart_'+i+'_'+element.id+'" onclick="ClickDay(\'' + element.id + '\', ' + i + ')">'+ daynames[i] + '</div></td>'
