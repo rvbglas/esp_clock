@@ -489,7 +489,6 @@ void saveConfig(bool force) {
     if (File f = LittleFS.open(F("/config.txt"),"w")) {
       f.print(cfg);
       f.close();
-      Serial.print(cfg);
       Serial.println(F("Конфигурация сохранена"));
       cfg.resetTimestamp();
     }

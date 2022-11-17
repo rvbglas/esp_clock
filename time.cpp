@@ -23,7 +23,7 @@ std::function<void()> tTimeHandlers[maxTimeHandlers];
 
 void timeIsSet(bool ntp) {
   if (ntp) {
-    Serial.println(F("Time syncronized with NTP"));
+    Serial.println(F("Время синхронизировано"));
     message(F("Время синхронизировано"));
     if (isRTCEnabled) {
       RTC.adjust(DateTime(now));

@@ -15,7 +15,7 @@ void setupNet(bool AP) {
     WiFi.mode(WIFI_STA);
     WiFi.begin(SSID,PSK);
     isApEnabled = false;
-    Serial.println(F("STA mode active"));
+    Serial.println(F("Режим беспроводного клиента"));
   } else {
     SSID = cfg.getCharValue(F("ap_ssid"));
     PSK = cfg.getCharValue(F("ap_psk"));
@@ -24,7 +24,7 @@ void setupNet(bool AP) {
     }
     WiFi.mode(WIFI_AP);
     WiFi.softAP(SSID,PSK);
-    Serial.println(F("AP mode active"));
+    Serial.println(F("Режим точки доступа"));
     isApEnabled = true;
     String IP = WiFi.softAPIP().toString();
     char buf[256];
@@ -44,11 +44,11 @@ void tickNet() {
   if (isApEnabled) {
     if (WiFi.status() == WL_CONNECTED && !isNetConnected) {
       isNetConnected = true;
-      Serial.print(F("Device connected to SSID ")); Serial.println(SSID);
+      Serial.print(F("Выполнено подключение к сети ")); Serial.println(SSID);
       message(F("Соединение установлено"));
     } else if (WiFi.status() != WL_CONNECTED && isNetConnected) {
       isNetConnected = false;
-      Serial.println(F("Network connection lost"));
+      Serial.println(F("Сеть потеряна"));
       message(F("Сеть потеряна"));
     }
   }

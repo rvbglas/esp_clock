@@ -129,7 +129,6 @@ void setupWeb() {
 
   isWebStarted = true;
 
-  Serial.println("Setting authentication...");
   strncpy(auth_user,cfg.getCharValue(F("auth_user")),31);
   strncpy(auth_pwd,cfg.getCharValue(F("auth_pwd")),31);
 
@@ -308,18 +307,18 @@ void tickWeb() {
   static bool connectInProgress = false;
   static unsigned long connectMillis = 0;
   if (actionScheduled && millis()>millisScheduled+300) {
-    Serial.print(F("Scheduled action ")); Serial.println(actionScheduled);
+    Serial.print(F("Запланированная операция ")); Serial.println(actionScheduled);
     //
     if (strcmp(actionScheduled,"restart") == 0) {
       server.end();
       reboot();
     } else if (strcmp(actionScheduled,"auth") == 0) {
-      Serial.println("New authentication credentials");
+      Serial.println("Логин/пароль изменены");
       strncpy(auth_user,cfg.getCharValue(F("auth_user")),31);
       strncpy(auth_pwd,cfg.getCharValue(F("auth_pwd")),31);
       pendingAuth = false;
     } else if (strcmp(actionScheduled,"wifi") == 0) {
-      Serial.println("New wifi credentials");
+      Serial.println("Применяю настройки сети");
       strcpy(storedSSID,WiFi.SSID().c_str());
       strcpy(storedPSK,WiFi.psk().c_str());
       WiFi.mode(WIFI_STA);
