@@ -359,10 +359,10 @@ function DrawPage(id) {
   var page_content = document.getElementById("_ui_page_content");
   var content = ''
   for (const element of pages[idx].elements) {
-    content = content + ElementHTML(element)
+    content = content + ElementHTML(element) + '\n'
   }
   page_content.innerHTML = content
-  window.location.hash = '#'+id
+  window.location.hash = id
 }
 
 function DrawNavigator(project, pages) {
@@ -376,10 +376,35 @@ function DrawNavigator(project, pages) {
   menu.innerHTML = list
 }
 
+function DrawContacts(contacts) {
+  if (!contacts) return;
+  var contact_list = '<hr><h4 class="pure-u1">Контакты</h4>'
+  for (const contact of contacts) {
+    const url = new URL(contact)
+    var ref
+    console.log(url)
+    switch (url.protocol) {
+      case 'http':
+      case 'https:':
+        ref = '&#8962; '+url.hostname
+        break
+      case 'mailto:':
+        ref = '&#9993; '+url.pathname
+        break
+      default:
+        ref = '&#128389; '+url.pathname
+    }
+    contact_list += '<a href="'+contact+'">'+ref+'</a>'
+  }
+  var footer = document.getElementById('_ui_contacts');
+  footer.innerHTML = contact_list
+}
+
 function DrawUI(ui) {
   DrawHeader(ui.project)
   pages = ui.pages
   DrawNavigator(ui.project, pages)
+  DrawContacts(ui.project.contacts)
   var anchor = getAnchor()
   if (anchor) {
     DrawPage(anchor)

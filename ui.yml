@@ -2,9 +2,10 @@ project:
   name: WiFi Clock
   version: 0.1.1
   contacts:
-    email: rvb@rvb.name
-    tg: rvbglas
-    site: https://git.rvb.name
+    - mailto:rvb@rvb.name
+    - tg:rvbglas
+    - https://git.rvb.name
+    - xmpp:rvb@rvb.name
 pages:
   - id: main
     title: Главная
@@ -45,6 +46,8 @@ pages:
   - id: clock
     title: Часы
     elements:
+      - type: text
+        value: Внешний вид
       - id: panel_font
         label: Шрифт часов
         type: select
@@ -72,12 +75,13 @@ pages:
         type: checkbox
       - id: panel_speed
         label: Скорость        
-        type: number
+        type: range
         min: 1
         max: 20
         step: 1
       - type: hr
-      - type: hr
+      - type: text
+        value: Яркость
       - id: day_from
         label: Дневной режим с
         type: number
@@ -105,9 +109,11 @@ pages:
   - id: alarm
     title: Будильник
     elements:
+      - type: text
+        value: Будильник
       - id: enable_alarm
         type: checkbox
-        label: Включить будильник
+        label: Включить
       - id: alarm_hour
         label: Час
         type: number
@@ -146,9 +152,11 @@ pages:
         min: 100
         max: 2000
       - type: hr
+      - type: text
+        value: Сигнал каждый час
       - id: enable_hourly
         type: checkbox
-        label: Сигнал каждый час
+        label: Включить
       - id: hourly_night
         label: В том числе ночью
         type: checkbox
@@ -273,7 +281,7 @@ pages:
           - value: 1
             text: "TX*"
       - id: button_inversed
-        label: "Кнопка на размыкание"
+        label: Кнопка на размыкание
         type: checkbox
       - type: hr
       - type: text
@@ -308,7 +316,7 @@ pages:
           - value: 1
             text: "TX*"
       - id: buzzer_passive
-        label: "Пассивный зуммер"
+        label: Пассивный зуммер
         type: checkbox
       - type: hr 
       - type: text
