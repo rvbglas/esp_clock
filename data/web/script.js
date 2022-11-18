@@ -251,6 +251,25 @@ function sendTime(id) {
   }
 }
 
+function downloadFile(url, name) {
+  const a = document.createElement('a')
+  a.href = url
+  a.download = name?name:url.split('/').pop()
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+}
+
+function uploadConfig() {
+  var elem = document.getElementById('_config_file')
+  if (elem.value) {
+    var data = elem.files[0]
+    console.log(data)
+    fetch('/config/put', {method:'PUT',body:data});
+    elem.value = null
+  }
+}
+
 function elementHTML(element) {
   var value
   if (parameters[element.id] || !isNaN(parameters[element.id])) {
@@ -326,8 +345,8 @@ function elementHTML(element) {
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
       value = now.toISOString().slice(0, -1);
       return '<div class="pure-u-1 pure-u-md-1-3"><label for="_ui_element_' + element.id + '">' + encode(element.label) + '</label>'
-        +'<div class="timesetter"><input id="_ui_element_'+element.id+'" data-ui_class="timeset" class="inline-input" type="datetime-local" value="'+value+'">'
-        + '<div class="send-button" onclick="sendTime(\''+element.id+'\')">-></div></div></div>'
+        +'<input id="_ui_element_'+element.id+'" data-ui_class="timeset" class="inline-input" type="datetime-local" value="'+value+'">'
+        + '<div class="send-button" onclick="sendTime(\''+element.id+'\')">-></div></div>'
     case 'text':
       return '<div class="pure-u-1 pure-u-md-1-3"><h2 id="_ui_element_'+ element.id +'" ' + (element.color?'style="color:'+ element.color+'" ':'')+ '>' + encode(value) + '</h2></div>'
     case 'number':
@@ -340,6 +359,13 @@ function elementHTML(element) {
         + '<input data-ui_class="range" type="range" '+ (!isNaN(element.min)?'min="'+element.min+'" ':'') + (!isNaN(element.max)?'max="'+element.max+'" ':'') + (!isNaN(element.step)?'step="'+element.step+'" ':'')
         + 'id="_ui_element_' + element.id + '" value="' + encode(value) +'"'+ pattern
         + ' class="pure-u-1" maxlength="99" oninput="sendUpdate(\'' + element.id + '\')" /></div>'
+    case 'config':
+      return '<div class="pure-u-1 pure-u-md-1-3"><label for="_ui_element_' + element.id + '">' + encode(element.label) + '</label>'
+        + '<div align="center"><input type="button" class="pure-button row-button" value="Сохранить..." onclick="downloadFile(\'/config/get\',\'config.json\')">'
+        + '<label for="_config_file" class="pure-button row-button">Восстановить...</label>'
+        + '<input type="button" class="pure-button row-button" value="Настройки по умолчанию" onclick="confirm(\'Вы точно хотите сбросить настройки?\')?sendAction(\'reset\'):console.log(\'Не надо так не надо...\')">'
+        + '<input type="file" id="_config_file" onchange="uploadConfig()" style="visibility:hidden">'
+        + '</div></div>'
     case 'table':
     default:
       return '<div class="pure-u-1 pure-u-md-1-3"><table class="texttable" cellpadding="5" border="0" align="center"><tbody><tr><td class="value-name" align="right">' 
@@ -432,9 +458,11 @@ GetUI()
 function initES() {
   if (!!window.EventSource) {
     var source = new EventSource('/events');
+    openMsg('Соединение установлено')
 
     source.onerror = function(e) {
       if (source.readyState == 2) {
+        openMsg('Соединение прервано')
         setTimeout(initES, 5000);
       }
     };

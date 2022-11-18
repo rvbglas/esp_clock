@@ -1388,10 +1388,6 @@ label.switch.socket input[type=checkbox]:checked + span.slider:after {
 
 /* Time setter */
 
-.timesetter {
-  display: inline;
-}
-
 .inline-input.inline-input.inline-input {
   display: inline-block;
   width: calc(100% - 5em)
@@ -1466,6 +1462,28 @@ input[type=number] {
 .value-name.value-name {
   width: 50%;
   padding-right: 1em;
+}
+
+/* Config */
+
+input[type=file]::file-selector-button {
+    display: none;
+}
+
+input[type=file]::-webkit-file-upload-button {
+    display: block;
+    width: 0;
+    height: 0;
+    margin-left: -100%;
+}
+
+input[type=file]::-ms-browse {
+    display: none;
+}
+
+.row-button.row-button.row-button {
+  display: inline-block;
+  margin: 0 2em 0 2em
 }
 
 /* fonts */

@@ -133,6 +133,7 @@ void drawScroll() {
 
 void message(const char* str, int priority) {
   if (priority > currentPriority) return;
+  currentPriority = priority;
   utf8rus(str, msgBuf, 255);
   Panel->displayClear();
   Panel->setFont(RomanCyrillic);
@@ -143,6 +144,7 @@ void message(const char* str, int priority) {
 
 void message(const __FlashStringHelper*  str, int priority) {
   if (priority > currentPriority) return;
+  currentPriority = priority;
   char buf[256];
   strncpy_P(buf, (PGM_P)str, 255);
   utf8rus(buf, msgBuf, 255);
@@ -155,12 +157,12 @@ void message(const __FlashStringHelper*  str, int priority) {
 
 void messageModal(const char* str) {
   message(str);
-  while (!(Panel->displayAnimate())) { delay(50); }
+  while (!(Panel->displayAnimate())) { delay(10); }
 }
 
 void messageModal(const __FlashStringHelper*  str) {
   message(str);
-  while (!(Panel->displayAnimate())) { delay(50); }
+  while (!(Panel->displayAnimate())) { delay(10); }
 }
 
 void scroll(const char* str, bool force) {

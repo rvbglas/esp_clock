@@ -3,6 +3,8 @@
 #include <ESPAsyncWebServer.h>
 #include <StreamString.h>
 #include <Ticker.h>
+#include "ArduinoJson.h"
+#include "AsyncJson.h"
 
 bool isApEnabled = false;
 bool isWebStarted = false;
@@ -144,7 +146,11 @@ void setupWeb() {
     }
     if(request->hasParam("name")) {
       const char* action = request->getParam("name")->value().c_str();
-      if (strcmp(action,"restart") == 0) {
+      if (strcmp(action,"reset") == 0) {
+          millisScheduled = millis();
+          actionScheduled = "reset";
+          request->send(200,"application/json", "{\"result\":\"OK\",\"message\":\"Сбрасываю настройки и перезагружаюсь\"}");
+      } else if (strcmp(action,"restart") == 0) {
         if (pendingWiFi) {
           request->send(200,"application/json", "{\"result\":\"FAILED\",\"message\":\"Не применены настройки WiFi\", \"page\":\"wifi\"}");
         } else if (pendingAuth) {
@@ -181,7 +187,7 @@ void setupWeb() {
           unsigned long timestamp = atoi(request->getParam("timestamp")->value().c_str());
           if (timestamp) {
             timeval tv = { timestamp, 0 };
-            settimeofday(&tv, nullptr);  
+            settimeofday(&tv, nullptr);
             if (isRTCEnabled) {
               Serial.println(F("Время установлено вручную"));
               RTC.adjust(DateTime(timestamp));
@@ -302,6 +308,42 @@ void setupWeb() {
     }
   });
 
+  AsyncCallbackJsonWebHandler* configUploadHandler = new AsyncCallbackJsonWebHandler("/config/put", [](AsyncWebServerRequest *request, JsonVariant &json) {
+    cfg.clear();
+    // first - set values
+    for( JsonPair kv : json.as<JsonObject>() ) {
+      const char* name = kv.key().c_str();
+      if (kv.value().is<bool>()) {
+        cfg.setValue(name, kv.value().as<bool>());
+      } else if (kv.value().is<int>()) {
+        cfg.setValue(name, kv.value().as<int>());
+      } else if (kv.value().is<double>()) {
+        cfg.setValue(name, kv.value().as<double>());
+      } else if (kv.value().is<char*>()) {
+        cfg.setValue(name, kv.value().as<char*>());
+      } else {
+        Serial.print(F("Неопознанный тип значения параметра ")); Serial.print(name); Serial.print(": "); Serial.println(kv.value().as<String>().c_str());
+        cfg.clear();
+        setupConfig();
+        request->send(500, "text/plain", "Unknown parameter type");
+      }
+    }
+    // second - handle all changes
+    for( JsonPair kv : json.as<JsonObject>() ) {
+      apply(kv.key().c_str());
+    }
+    pendingWiFi = false;
+    pendingAuth = false;
+    saveConfig();
+    message(F("Применены сохраненные настройки"),5);
+    reportMessage(F("Применены сохраненные настройки"));
+    millisScheduled = millis() + 10000;
+    actionScheduled = "restart";
+    request->send(200,"application/json", "{\"result\":\"OK\",\"message\":\"Настройки восстановлены из резервной копии\"}");
+  });
+
+  server.addHandler(configUploadHandler).setAuthentication(auth_user,auth_pwd);
+
   server.serveStatic("ui", LittleFS, "/ui.json").setAuthentication(auth_user,auth_pwd);
 
   server.serveStatic("/", LittleFS, "/web/").setDefaultFile("index.html").setAuthentication(auth_user,auth_pwd);
@@ -334,7 +376,10 @@ void tickWeb() {
   if (actionScheduled && millis()>millisScheduled+300) {
     Serial.print(F("Запланированная операция ")); Serial.println(actionScheduled);
     //
-    if (strcmp(actionScheduled,"restart") == 0) {
+    if (strcmp(actionScheduled,"reset") == 0) {
+      server.end();
+      reset();
+    } else if (strcmp(actionScheduled,"restart") == 0) {
       server.end();
       reboot();
     } else if (strcmp(actionScheduled,"auth") == 0) {

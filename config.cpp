@@ -556,6 +556,7 @@ char* distConfig PROGMEM =
 
 void reset() {
   messageModal(F("Сбрасываю настройки"));
+  delay(2000);
   if (File f = LittleFS.open(F("/config.txt"),"w")) {
     f.print(distConfig);
     f.close();

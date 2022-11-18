@@ -1,6 +1,6 @@
 project:
   name: WiFi Clock
-  version: 0.1.2
+  version: 0.2.0
   contacts:
     - mailto:rvb@rvb.name
     - tg:rvbglas
@@ -412,6 +412,9 @@ pages:
     title: Погода
     icon: "&#61673;"
     elements:
+      - id: enable_weather
+        label: Использовать погодный сервис
+        type: checkbox
       - id: weather_url
         label: URL погодного сервиса
         type: input
@@ -468,6 +471,12 @@ pages:
       - id: auth
         type: button
         label: Сменить пароль
+      - type: hr
+      - type: text
+        value: Конфигурация
+      - id: _config
+        type: config
+        label: Сохранение и восстановление настроек
       - type: hr
       - type: text
         value: Синхронизация времени
