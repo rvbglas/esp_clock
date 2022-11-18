@@ -25,6 +25,7 @@ void timeIsSet(bool ntp) {
   if (ntp) {
     Serial.println(F("Время синхронизировано"));
     message(F("Время синхронизировано"));
+    reportMessage(F("Время синхронизировано"));
     if (isRTCEnabled) {
       RTC.adjust(DateTime(now));
     }

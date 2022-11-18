@@ -89,6 +89,7 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState) {
         Serial.print(F("Ошибка разбора ответа: "));
         Serial.println(error.c_str());
         Serial.println(weather_json);
+        reportMessage(F("Ошибка обновления погоды"));
         return;
       }
       weather.clear();
@@ -97,6 +98,7 @@ void requestCB(void* optParm, AsyncHTTPRequest* request, int readyState) {
       delete current_weather;
       processTemplates(weatherData,weather_template,weather,255);
       sendWeather();
+      reportMessage(F("Погода обновлена"));
       scroll(weatherData, !isNight());
     }
   }

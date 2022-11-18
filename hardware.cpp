@@ -30,9 +30,9 @@ void beep(int tone, int length, int beep, int silent) {
   beepToneRequested = tone;
   beepLengthRequested = length;
   if (!silent && beep>length) {
-    beepMs = length; 
-  } else { 
-    beepMs = beep; 
+    beepMs = length;
+  } else {
+    beepMs = beep;
   }
   silentMs = silent;
 }
@@ -69,6 +69,7 @@ void buttonHandler(Button2& btn) {
         beep(800,800,200,100);
         click_counter++;
         if (click_counter>2) {
+          reportMessage(F("Сбрасываю настройки"));
           tone(1200,1000);
           Serial.println(F("Три тройных нажатия - сбрасываю конфигурацию"));
           reset();
@@ -85,7 +86,7 @@ void buttonLongClickHandler(Button2& btn) {
     return;
   }
   if (millis() - first_click_millis < 6000) {
-    if (isApEnabled) {    
+    if (isApEnabled) {
       setupNet(false);
     } else {
       setupNet(true);
@@ -98,10 +99,12 @@ void buttonLongClickHandler(Button2& btn) {
   Serial.println(F("Alarm = ")); Serial.println(enable_alarm);
   if (enable_alarm) {
     message(F("Будильник включен"));
-    reportChange(F("enable_alarm"));    
+    reportChange(F("enable_alarm"));
+    reportMessage(F("Будильник включен"));
   } else {
     message(F("Будильник выключен"));
     reportChange(F("enable_alarm"));
+    reportMessage(F("Будильник выключен"));
   }
 
 }
@@ -119,7 +122,7 @@ void setupHardware() {
     RTC.begin();
     time_t rtc = RTC.now().unixtime();
     timeval tv = { rtc, 0 };
-    settimeofday(&tv, nullptr);  
+    settimeofday(&tv, nullptr);
     isRTCEnabled = true;
     Serial.println(F("Время установлено по встроенным часам"));
   }
@@ -140,7 +143,7 @@ void setupHardware() {
     isBuzzerEnabled = true;
     buzzer_pin = cfg.getIntValue(F("buzzer_pin"));
     pinMode(buzzer_pin,OUTPUT);
-    buzzer_passive = cfg.getBoolValue(F("buzzer_passive"));    
+    buzzer_passive = cfg.getBoolValue(F("buzzer_passive"));
   } else {
     isBuzzerEnabled = true;
   }
@@ -152,13 +155,13 @@ void doBeep(int note, int duration) {
 
 void tickHardware() {
   if (isButtonEnabled) {
-    btn.loop();    
+    btn.loop();
   }
   if (isBuzzerEnabled) {
     static unsigned long stopBeepMillis = 0;
     if (stopBeepMillis && millis() >= stopBeepMillis) {
       beepStateRequested = false;
-      stopBeepMillis = 0;      
+      stopBeepMillis = 0;
     }
     if (beepStateRequested != beepState && beepStateRequested) {
       stopBeepMillis = millis() + beepLengthRequested;

@@ -471,6 +471,9 @@ pages:
       - type: hr
       - type: text
         value: Синхронизация времени
+      - id: _timeset
+        label: Установить время вручную
+        type: timeset
       - id: ntp_server
         type: input
         label: NTP-сервер

@@ -197,4 +197,5 @@ extern bool isApEnabled;
 void setupWeb();
 void tickWeb();
 void reportChange(const __FlashStringHelper* name);
+void reportMessage(const __FlashStringHelper* msg);
 void sendWeather();

@@ -24,6 +24,7 @@ void checkAlarm() {
   int alarm_silent_ms = cfg.getIntValue(F("alarm_silent_ms"));
   if ( enable_alarm && (hh == alarm_hour) && (mi == alarm_minute) && (alarm_days[dw?dw-1:6]!='0')) {
     beep(alarm_tone, alarm_length * 1000, alarm_beep_ms, alarm_silent_ms);
+    reportMessage(F("Будильник сработал!"));
   }
 }
 

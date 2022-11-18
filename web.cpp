@@ -40,18 +40,24 @@ void reportChange(const __FlashStringHelper* name) {
   }
 }
 
+void reportMessage(const __FlashStringHelper* msg) {
+  char buf[256];
+  strcpy_P(buf, (PGM_P)msg);
+  events.send(buf,"message",millis());
+}
+
 void sendInitial(AsyncEventSourceClient *client) {
   String mac = WiFi.macAddress();
   char buf[256];
   sprintf(buf,"{\"_mac\":\"%s\",\"_weather\":\"%s\"}", mac.c_str(), weatherData);
-  client->send(buf,"keepalive",millis());
+  client->send(buf,"update",millis());
   mac = String();
 }
 
 void sendWeather() {
   char buf[256];
   sprintf(buf,"{\"_weather\":\"%s\"}",weatherData);
-  events.send(buf,"keepalive",millis());
+  events.send(buf,"update",millis());
 }
 
 void sendKeepalive() {
@@ -86,7 +92,7 @@ void sendKeepalive() {
   } else {
     sprintf(buf,"{\"_uptime\":\"%d м %d с\", \"_date\":\"%02d.%2d.%04d\", \"_time\":\"%02d:%02d\",\"_heap\":\"%d б\", \"_rssi\":\"%d\",  \"_last_sync\":\"%s\", \"_changed\":%s}", mins, uptime, dd, mm, yy, hh, mi, heap, rssi, sync, changed?"true":"false");
   }
-  events.send(buf,"keepalive",millis());
+  events.send(buf,"update",millis());
 }
 
 void apply(const char* name) {
@@ -170,7 +176,26 @@ void setupWeb() {
           millisScheduled = millis();
           actionScheduled = "save";
         }
+      } else if (strcmp(action,"time") == 0) {
+        if(request->hasParam("timestamp")) {
+          unsigned long timestamp = atoi(request->getParam("timestamp")->value().c_str());
+          if (timestamp) {
+            timeval tv = { timestamp, 0 };
+            settimeofday(&tv, nullptr);  
+            if (isRTCEnabled) {
+              Serial.println(F("Время установлено вручную"));
+              RTC.adjust(DateTime(timestamp));
+            }
+          }
+          request->send(200,"application/json", "{\"result\":\"OK\",\"message\":\"Устанавливаю время\"}");
+        } else {
+          request->send(500, "text/plain", "{\"result\":\"FAILED\",\"message\":\"Not all parameters set\"}");
+        }
+      } else {
+        request->send(500, "text/plain", "{\"result\":\"FAILED\",\"message\":\"Unsupported action\"}");
       }
+    } else {
+      request->send(500, "text/plain", "{\"result\":\"FAILED\",\"message\":\"Not all parameters set\"}");
     }
   });
 
@@ -348,6 +373,7 @@ void tickWeb() {
 
   if (!pendingWiFi && !pendingAuth && cfg.getTimestamp() && cfg.getTimestamp() < now - CFG_AUTOSAVE) {
     saveConfig();
+    reportMessage(F("Настройки сохранены"));
     Serial.println(F("Настройки сохранены"));
   }
 }
