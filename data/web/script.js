@@ -364,7 +364,7 @@ function elementHTML(element) {
         + '<div align="center"><input type="button" class="pure-button row-button" value="Сохранить..." onclick="downloadFile(\'/config/get\',\'config.json\')">'
         + '<label for="_config_file" class="pure-button row-button">Восстановить...</label>'
         + '<input type="button" class="pure-button row-button" value="Настройки по умолчанию" onclick="confirm(\'Вы точно хотите сбросить настройки?\')?sendAction(\'reset\'):console.log(\'Не надо так не надо...\')">'
-        + '<input type="file" id="_config_file" onchange="uploadConfig()" style="visibility:hidden">'
+        + '<input type="file" id="_config_file" onchange="uploadConfig()" hidden>'
         + '</div></div>'
     case 'table':
     default:

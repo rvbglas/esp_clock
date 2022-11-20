@@ -919,15 +919,17 @@ a.pure-button-selected {
 
 :root {
  --slide: 25em;
- --blue: #129fea;
- --darkgray: #242424;
- --lightgray: #cad2d3;
- --darkergray: #191919;
+ --accent: #129fea;
+ --dark-gray: #242424;
+ --light-gray: #cad2d3;
+ --darker-gray: #191919;
+ --black-opacity: rgba(0,0,0,0.4);
+ --light: white;
 }
 
 body {
- color:#aaa;
- background: var(--darkgray);
+ color:var(--light-gray);
+ background: var(--dark-gray);
 }
 
 .pure-img-responsive {
@@ -965,11 +967,11 @@ body {
 }
 .header {
  margin:0;
- color: var(--darkgray);
+ color: var(--dark-gray);
  text-align:center
 }
 .header h1 {
- color: var(--blue);
+ color: var(--accent);
  margin:.4em 0;
  padding-top: 0.5em;
  font-size: 2em;
@@ -978,14 +980,14 @@ body {
 }
 .header h2 {
  font-weight:300;
- color:#ccc;
+ color: var(--light-gray);
  padding:0;
  margin-top:0
 }
 .content-subhead {
  margin: 5em 0 2em 0;
  font-weight:300;
- color: var(--lightgray)
+ color: var(--light-gray)
 }
 #menu {
  margin-left:calc(var(--slide)* -1);
@@ -996,12 +998,12 @@ body {
  left:0;
  bottom:0;
  z-index:1000;
- background: var(--darkergray);
+ background: var(--darker-gray);
  overflow-y:auto;
  -webkit-overflow-scrolling:touch
 }
 #menu a {
- color: var(--lightgray);
+ color: var(--light-gray);
  border:none;
  padding:.6em 0.3em .6em 0.6em
 }
@@ -1012,24 +1014,24 @@ body {
 }
 #menu .pure-menu ul,
 #menu .pure-menu .menu-item-divided {
- border-top: 0.1em solid var(--darkgray)
+ border-top: 0.1em solid var(--dark-gray)
 }
 #menu .pure-menu li a:hover,
 #menu .pure-menu li a:focus {
- background: var(--darkgray);
- color: var(--lightgray);
+ background: var(--dark-gray);
+ color: var(--light-gray);
 }
 #menu .pure-menu-selected,
 #menu .pure-menu-heading {
- background: var(--blue);
+ background: var(--accent);
 }
 #menu .pure-menu-selected a {
- color: white
+ color: var(--light)
 }
 #menu .pure-menu-heading {
  letter-spacing:.15em;
  text-transform:uppercase;
- color: white;
+ color: var(--light);
  margin:0;
  text-align:center;
  padding:.6em 0.3em .6em 0.3em
@@ -1058,7 +1060,7 @@ body {
 .menu-link span,
 .menu-link span:before,
 .menu-link span:after {
- background-color: var(--blue);
+ background-color: var(--accent);
  width:100%;
  height:.2em
 }
@@ -1113,25 +1115,25 @@ input[type=range]::-webkit-slider-runnable-track {
  cursor:pointer;
  animate:0.2s;
  box-shadow: none
- background: var(--blue);
+ background: var(--accent);
  border-radius: 0.3em;
  border: none
 }
 
 input[type=range]::-webkit-slider-thumb {
  box-shadow: none;
- border: 0.1em solid var(--lightgray)
+ border: 0.1em solid var(--light-gray)
  height: 2em;
  width: 2em;
  border-radius: 2em;
- background: var(--lightgray)
+ background: var(--light-gray)
  cursor:pointer;
  -webkit-appearance:none;
  margin-top: 0.85em
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
- background: var(--blue)
+ background: var(--accent)
 }
 
 input[type=range]::-moz-range-track {
@@ -1140,18 +1142,18 @@ input[type=range]::-moz-range-track {
  cursor: pointer;
  animate:0.2s;
  box-shadow: none;
- background: var(--blue);
+ background: var(--accent);
  border-radius: 0.3em;
  border: none
 }
 
 input[type=range]::-moz-range-thumb {
  box-shadow: none;
- border: 0.1em solid var(--blue);
+ border: 0.1em solid var(--accent);
  height: 2em;
  width: 2em;
  border-radius: 2em;
- background: var(--lightgray);
+ background: var(--light-gray);
  cursor:pointer
 }
 
@@ -1166,14 +1168,14 @@ input[type=range]::-ms-track {
 }
 
 input[type=range]::-ms-fill-lower {
- background: var(--lightgray);
+ background: var(--light-gray);
  border: none;
  border-radius: 0.6em;
  box-shadow: none
 }
 
 input[type=range]::-ms-fill-upper {
- background: var(--lightgray);
+ background: var(--light-gray);
  border: none;
  border-radius: 0.6em;
  box-shadow: none
@@ -1182,20 +1184,20 @@ input[type=range]::-ms-fill-upper {
 input[type=range]::-ms-thumb {
  margin-top:0.1em;
  box-shadow: nonel
- border: 0.1em solid var(--blue);
+ border: 0.1em solid var(--accent);
  height: 2em;
  width: 2em;
  border-radius: 2em;
- background: var(--lightgray);
+ background: var(--light-gray);
  cursor:pointer
 }
 
 input[type=range]:focus::-ms-fill-lower {
- background: var(--lightgray);
+ background: var(--light-gray);
 }
 
 input[type=range]:focus::-ms-fill-upper {
- background: var(--lightgray);
+ background: var(--light-gray);
 }
 
 
@@ -1222,7 +1224,7 @@ footer a {
   position: fixed;
   right: 0.5em;
   top: 0.5em;
-  background-color: var(--darkgray);
+  background-color: var(--dark-gray);
   z-index:200;
   word-wrap: anywhere;
   float: right;
@@ -1236,13 +1238,13 @@ footer a {
   bottom: 0.5em;
   z-index:200;
   float: right;
-  color:#fff;
+  color: var(--light);
 }
 
 .message-text {
-  background-color: var(--darkgray);
-  border:0.2em solid var(--blue);
-  box-shadow:inset 0 0.1em 1.1em 0 var(--blue);
+  background-color: var(--dark-gray);
+  border:0.2em solid var(--accent);
+  box-shadow:inset 0 0.1em 1.1em 0 var(--accent);
   word-wrap: anywhere;
   font-weight: bolder;
   font-size: 120%;
@@ -1262,11 +1264,11 @@ footer a {
     text-shadow: none;
     text-align: center;
     font-weight: bold;
-    background: var(--darkgray);
-    color: white;
-    border: 0.2em solid var(--blue);
+    background: var(--dark-gray);
+    color: var(--light);
+    border: 0.2em solid var(--accent);
     border-radius: 1em;
-    box-shadow:inset 0 0.1em 1.1em 0 var(--blue);
+    box-shadow:inset 0 0.1em 1.1em 0 var(--accent);
 }
 
 .fadeout {
@@ -1289,22 +1291,22 @@ footer a {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.3); /* Black w/ opacity */
+  background-color: var(--black-opacity); /* Black w/ opacity */
 }
 .modal-content {
   -webkit-appearance:button;
   cursor:pointer;
   letter-spacing:.05em;
   text-transform:uppercase;
-  color:var(--lightgray);
+  color:var(--light-gray);
   font-size:90%;
-  border:0.2em solid var(--blue);
+  border:0.2em solid var(--accent);
   border-radius:6px;
-  box-shadow:inset 0 0.1em 1.1em 0 var(--blue);
+  box-shadow:inset 0 0.1em 1.1em 0 var(--accent);
   padding: 1em;
   width: max-content;
   min-width: 30%;
-  background-color: var(--darkgray);
+  background-color: var(--dark-gray);
   margin: 10% auto;
   padding: 1rem
 }
@@ -1312,7 +1314,7 @@ footer a {
   font-weight: bold;
   font-size: 120%;
   text-align: center;
-  border-bottom: var(--blue) solid 0.1em;
+  border-bottom: var(--accent) solid 0.1em;
 }
 
 /* overlapping hint button */
@@ -1325,7 +1327,7 @@ footer a {
   cursor: pointer;
   width: 1rem;
   background: transparent;
-  color: var(--darkgray);
+  color: var(--dark-gray);
   padding: .5em .6em;
   border: none;
   box-shadow: none;
@@ -1356,21 +1358,21 @@ span.switch.slider {
 }
 label.switch.socket span.switch.slider:before {
     content: "";
-    color: gray;
+    color: var(--darkgray);
     width: 3em;
     height: 1.4em;
     border-radius: 1em;
     position: absolute;
     left: 0;
     top: 0;
-    border:0.2em solid var(--blue);
-    box-shadow:inset 0 0.1em 1.1em 0 var(--blue)
+    border:0.2em solid var(--accent);
+    box-shadow:inset 0 0.1em 1.1em 0 var(--accent)
 }
 label.switch span.switch.slider:after {
     content: "";
     width: 1rem;
     height: 1rem;
-    background: var(--blue);
+    background: var(--accent);
     border-radius: 1em;
     position: absolute;
     left: 0.4rem;
@@ -1378,11 +1380,11 @@ label.switch span.switch.slider:after {
     transition: 0.2s;
 }
 label.switch.socket input[type=checkbox]:checked + span.slider:before {
-    background: var(--lightgray);
+    background: var(--light-gray);
 }
 
 label.switch.socket input[type=checkbox]:checked + span.slider:after {
-    background: white;
+    background: var(--light);
     left: 1.9em;
 }
 
@@ -1399,15 +1401,21 @@ label.switch.socket input[type=checkbox]:checked + span.slider:after {
  font-size:100%;
  line-height: 1.15em;
  padding: .5em 1em;
- color:rgba(0,0,0,.8);
+ color: var(--dark-gray);
  border:none transparent;
- background-color:#e6e6e6;
+ background-color: var(--light-gray);
  text-decoration:none;
  border-radius:2px;
  vertical-align: middle;
  margin-left: 1em;
  width: 2em;
  text-align: center;
+}
+
+.pure-button {
+ color: var(--dark-gray);
+ border:none transparent;
+ background-color: var(--light-gray);
 }
 
 /* weekdays */
@@ -1426,13 +1434,13 @@ label.switch.socket input[type=checkbox]:checked + span.slider:after {
     margin: 0.2vw;
     padding: 0.2em;
     border-radius: 5em;
-    border:0.2em solid var(--blue);
-    box-shadow:inset 0 0.1em 1.1em 0 var(--blue);
-    color: gray
+    border:0.2em solid var(--accent);
+    box-shadow:inset 0 0.1em 1.1em 0 var(--accent);
+    color: var(--light-gray)
 }
 .weekday-selected {
-    background: var(--lightgray);
-    color: black
+    background: var(--light-gray);
+    color: var(--darker-gray);
 }
 
 /* Hide arrows */
@@ -1483,7 +1491,7 @@ input[type=file]::-ms-browse {
 
 .row-button.row-button.row-button {
   display: inline-block;
-  margin: 0 2em 0 2em
+  margin: 0 2em 1em 2em
 }
 
 /* fonts */
