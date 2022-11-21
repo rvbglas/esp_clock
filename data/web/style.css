@@ -1310,11 +1310,19 @@ footer a {
   margin: 10% auto;
   padding: 1rem
 }
+
 .table-header {
   font-weight: bold;
   font-size: 120%;
   text-align: center;
-  border-bottom: var(--accent) solid 0.1em;
+}
+
+.table-header tr td {
+  border-bottom: 0.1em solid var(--light-gray)
+}
+
+.modal-content table {
+  border-spacing: 0.5em 1em;
 }
 
 /* overlapping hint button */
@@ -1416,6 +1424,7 @@ label.switch.socket input[type=checkbox]:checked + span.slider:after {
  color: var(--dark-gray);
  border:none transparent;
  background-color: var(--light-gray);
+ margin: 0.5em 1em 0.5em 1em;
 }
 
 /* weekdays */
@@ -1491,7 +1500,13 @@ input[type=file]::-ms-browse {
 
 .row-button.row-button.row-button {
   display: inline-block;
-  margin: 0 2em 1em 2em
+}
+
+/* hr */
+
+hr {
+ margin: 0.5em 2em 0.5em 2em;
+ color: var(--accent);
 }
 
 /* fonts */

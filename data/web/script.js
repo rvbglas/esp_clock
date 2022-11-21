@@ -214,12 +214,12 @@ function getWiFi(id) {
       return;
     }
     var json = JSON.parse(this.responseText)
-    var table = '<table cellpadding="5" border="0" align="center"><thead class="table-header"><tr><td>SSID</td><td>BSSID</td><td>RSSI</td><td>Канал</td><td>Защита</td></tr></thead><tbody>'
+    var table = '<table align="center"><thead class="table-header"><tr><td>SSID</td><td>BSSID</td><td>RSSI</td><td>Канал</td><td>Защита</td></tr></thead><tbody>'
     if (!json.length) {
       setTimeout(getWiFi(id),5000);
     }
     for (idx in json) {
-      var encryption = json[idx].secure == 2? "TKIP" : json[idx].secure == 5? "WEP" : json[idx].secure == 4? "CCMP" : json[idx].secure == 7? "нет" : json[idx].secure == 8? "Автоматически" : "Не определено";
+      var encryption = json[idx].secure == 2? "TKIP" : json[idx].secure == 5? "WEP" : json[idx].secure == 4? "CCMP" : json[idx].secure == 7? "нет" : json[idx].secure == 8? "Авто" : "Неизв.";
       table += '<tr onclick="selectWiFi(\''+id+'\',\''+json[idx].ssid+'\')"><td>'+json[idx].ssid+'</td><td>'+json[idx].bssid+'</td><td>'+json[idx].rssi+'</td><td>'+json[idx].channel+'</td><td>'+encryption+'</td></tr>'
     }
     
@@ -346,7 +346,7 @@ function elementHTML(element) {
       value = now.toISOString().slice(0, -1);
       return '<div class="pure-u-1 pure-u-md-1-3"><label for="_ui_element_' + element.id + '">' + encode(element.label) + '</label>'
         +'<input id="_ui_element_'+element.id+'" data-ui_class="timeset" class="inline-input" type="datetime-local" value="'+value+'">'
-        + '<div class="send-button" onclick="sendTime(\''+element.id+'\')">-></div></div>'
+        + '<div class="send-button" onclick="sendTime(\''+element.id+'\')">&#8594;</div></div>'
     case 'text':
       return '<div class="pure-u-1 pure-u-md-1-3"><h2 id="_ui_element_'+ element.id +'" ' + (element.color?'style="color:'+ element.color+'" ':'')+ '>' + encode(value) + '</h2></div>'
     case 'number':
